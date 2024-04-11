@@ -9,7 +9,7 @@ package entidades;
  *
  * @author helma
  */
-public class Producto {
+public class Producto implements Comparable<Producto> {
 
     private int codigo;
     private String descripcion;
@@ -66,6 +66,19 @@ public class Producto {
 
     public void setCategoria(String rubro) {
         this.rubro = rubro;
+    }
+
+    @Override
+    public int compareTo(Producto prod) { //esto determina el orden de los componentes
+        if(codigo == prod.codigo){        // y ademas dice si dos componentes son iguales
+            return 0;
+        }
+        else if(codigo > prod.codigo){
+            return 1;
+        }
+        else{
+            return -1;
+        }
     }
 
 }
