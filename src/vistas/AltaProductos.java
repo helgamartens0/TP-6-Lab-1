@@ -22,6 +22,16 @@ public class AltaProductos extends javax.swing.JInternalFrame {
     public AltaProductos(TreeSet<Producto> productos) {
         initComponents();
         this.productos = productos;
+        jbBuscar.requestFocus();
+    }
+
+    private Producto buscarPorCodigo(int codigo) {
+        for (Producto producto : productos) {
+            if (producto.getCodigo() == codigo) {
+                return producto;
+            }
+        }
+        return null;
     }
 
     /**
@@ -48,7 +58,7 @@ public class AltaProductos extends javax.swing.JInternalFrame {
         jtStock = new javax.swing.JTextField();
         jtPrecio = new javax.swing.JTextField();
         jcRubro = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        jbBuscar = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -68,6 +78,11 @@ public class AltaProductos extends javax.swing.JInternalFrame {
         jLabel5.setText("Stock");
 
         jbNuevo.setText("Nuevo");
+        jbNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNuevoActionPerformed(evt);
+            }
+        });
 
         jbGuardar.setText("Guardar");
         jbGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -77,8 +92,18 @@ public class AltaProductos extends javax.swing.JInternalFrame {
         });
 
         jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
 
         jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
 
         jtCodigo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -91,12 +116,14 @@ public class AltaProductos extends javax.swing.JInternalFrame {
             }
         });
 
+        jtDescripcion.setEnabled(false);
         jtDescripcion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtDescripcionActionPerformed(evt);
             }
         });
 
+        jtStock.setEnabled(false);
         jtStock.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jtStockFocusLost(evt);
@@ -108,6 +135,7 @@ public class AltaProductos extends javax.swing.JInternalFrame {
             }
         });
 
+        jtPrecio.setEnabled(false);
         jtPrecio.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jtPrecioFocusLost(evt);
@@ -120,10 +148,12 @@ public class AltaProductos extends javax.swing.JInternalFrame {
         });
 
         jcRubro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Comestible", "Limpieza", "Perfumeria" }));
+        jcRubro.setEnabled(false);
 
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbBuscar.setText("BUSCAR");
+        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jbBuscarActionPerformed(evt);
             }
         });
 
@@ -156,10 +186,10 @@ public class AltaProductos extends javax.swing.JInternalFrame {
                                             .addComponent(jtStock, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                                .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(28, 28, 28)
+                                                .addComponent(jbBuscar)))))
+                                .addGap(0, 64, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -175,13 +205,16 @@ public class AltaProductos extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbBuscar)))
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -197,7 +230,7 @@ public class AltaProductos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbNuevo)
                     .addComponent(jbGuardar)
@@ -225,9 +258,30 @@ public class AltaProductos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtPrecioActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        if (productos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "no hay productos para mostrar");
+            return;
+        }
+
+        int codigoBuscado = Integer.parseInt(jtCodigo.getText());
+
+        Producto prod = new Producto();
+        prod = buscarPorCodigo(codigoBuscado);
+
+        if (prod != null) {
+            jtCodigo.setText(String.valueOf(prod.getCodigo()));
+            jtDescripcion.setText(prod.getDescripcion());
+            jtPrecio.setText(String.valueOf(prod.getPrecio()));
+            jtStock.setText(String.valueOf(prod.getStock()));
+            jcRubro.setSelectedItem(prod.getCategoria());
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encuentra producto con el codigo: " + codigoBuscado);
+        }
+
+
+    }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // TODO add your handling code here: int codigo;
@@ -256,11 +310,11 @@ public class AltaProductos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Producto Guardado");
 //            System.out.println(productos.size());
             limpiarCampos();
+            deshabilitarCampos();
 
         } else {
             JOptionPane.showMessageDialog(this, "Codigo ya existente");
         }
-
 //comentario
     }//GEN-LAST:event_jbGuardarActionPerformed
 
@@ -290,11 +344,48 @@ public class AltaProductos extends javax.swing.JInternalFrame {
         Pattern p = Pattern.compile("\\d{1,4}");
         Matcher m = p.matcher(jtStock.getText());
         if (!m.matches()) {
-            JOptionPane.showMessageDialog(this, "Ustede debe ing. un nro");
+            JOptionPane.showMessageDialog(this, "[stock]Debe ingresar un numero");
             jtStock.requestFocus();
             return;
         }
     }//GEN-LAST:event_jtStockFocusLost
+
+    private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
+        // TODO add your handling code here:
+        jtCodigo.setEnabled(true);
+        jtDescripcion.setEnabled(true);
+        jtStock.setEnabled(true);
+        jcRubro.setEnabled(true);
+        jtPrecio.setEnabled(true);
+    }//GEN-LAST:event_jbNuevoActionPerformed
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        // TODO add your handling code here:int codigoBuscado = Integer.parseInt(jtCodigo.getText());
+
+        int codigoBuscado = Integer.parseInt(jtCodigo.getText());
+        Producto prod = new Producto();
+        prod = buscarPorCodigo(codigoBuscado);
+
+        if (prod != null) {
+            productos.remove(prod);
+            JOptionPane.showMessageDialog(this, "Producto eliminado con exito");
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encuentra producto con el codigo: " + codigoBuscado);
+        }
+    }//GEN-LAST:event_jbEliminarActionPerformed
+
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jbSalirActionPerformed
+
+    private void deshabilitarCampos() {
+//        jtCodigo.setEnabled(false);
+        jtDescripcion.setEnabled(false);
+        jtStock.setEnabled(false);
+        jcRubro.setEnabled(false);
+        jtPrecio.setEnabled(false);
+    }
 
     private void limpiarCampos() {
         jtCodigo.setText("");
@@ -304,13 +395,13 @@ public class AltaProductos extends javax.swing.JInternalFrame {
         jtStock.setText("");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbGuardar;
     private javax.swing.JButton jbNuevo;

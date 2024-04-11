@@ -119,7 +119,7 @@ public class Menu extends javax.swing.JFrame {
         //agregamos la ventana al escritorio
         escritorio.add(alta);
         escritorio.moveToFront(alta);
-        
+     
     }//GEN-LAST:event_jmProductosActionPerformed
 
     /**
