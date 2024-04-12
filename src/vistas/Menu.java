@@ -46,7 +46,6 @@ public class Menu extends javax.swing.JFrame {
         jmPrecio = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(700, 600));
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
@@ -77,6 +76,11 @@ public class Menu extends javax.swing.JFrame {
         jMenu2.add(jmRubro);
 
         jmNombre.setText("Por Nombre");
+        jmNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmNombreActionPerformed(evt);
+            }
+        });
         jMenu2.add(jmNombre);
 
         jmPrecio.setText("Por Precio");
@@ -131,6 +135,19 @@ public class Menu extends javax.swing.JFrame {
         escritorio.moveToFront(alta);
         alta.establecerFocoEnBuscar();
     }//GEN-LAST:event_jmProductosActionPerformed
+
+    private void jmNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmNombreActionPerformed
+        // TODO add your handling code here:
+        escritorio.repaint();   // redibujar
+
+        //instanciamos
+        ListadoPoNombre listaNombre = new ListadoPoNombre(lista);
+        listaNombre.setVisible(true);
+
+        //agregamos la ventana al escritorio
+        escritorio.add(listaNombre);
+        escritorio.moveToFront(listaNombre);
+    }//GEN-LAST:event_jmNombreActionPerformed
 
     /**
      * @param args the command line arguments
