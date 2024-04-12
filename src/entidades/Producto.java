@@ -67,7 +67,7 @@ public class Producto implements Comparable<Producto> {
     public void setCategoria(String rubro) {
         this.rubro = rubro;
     }
-
+//hay q reescribir el EQUALS Y EL SET 
     @Override
     public int compareTo(Producto prod) { //esto determina el orden de los componentes
         if(codigo == prod.codigo){        // y ademas dice si dos componentes son iguales

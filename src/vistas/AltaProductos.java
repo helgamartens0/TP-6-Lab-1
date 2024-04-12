@@ -18,11 +18,21 @@ import java.util.regex.Matcher;
 public class AltaProductos extends javax.swing.JInternalFrame {
 
     private TreeSet<Producto> productos;
+    private TreeSet<Producto> listadoPorPrecio;
 
-    public AltaProductos(TreeSet<Producto> productos) {
+    public TreeSet<Producto> getListaProductos() {
+        return productos;
+    }
+
+    public AltaProductos(TreeSet<Producto> productos, TreeSet<Producto> listadoPorPrecio) {
         initComponents();
         this.productos = productos;
+        this.listadoPorPrecio = listadoPorPrecio;
         jbBuscar.requestFocus();
+    }
+
+    public void establecerFocoEnBuscar() {
+        jbBuscar.requestFocusInWindow();
     }
 
     private Producto buscarPorCodigo(int codigo) {
@@ -92,6 +102,7 @@ public class AltaProductos extends javax.swing.JInternalFrame {
         });
 
         jbEliminar.setText("Eliminar");
+        jbEliminar.setEnabled(false);
         jbEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbEliminarActionPerformed(evt);
@@ -150,7 +161,7 @@ public class AltaProductos extends javax.swing.JInternalFrame {
         jcRubro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Comestible", "Limpieza", "Perfumeria" }));
         jcRubro.setEnabled(false);
 
-        jbBuscar.setText("BUSCAR");
+        jbBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vistas/buscar.png"))); // NOI18N
         jbBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbBuscarActionPerformed(evt);
@@ -188,8 +199,8 @@ public class AltaProductos extends javax.swing.JInternalFrame {
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(28, 28, 28)
-                                                .addComponent(jbBuscar)))))
-                                .addGap(0, 64, Short.MAX_VALUE))))
+                                                .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(0, 88, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -211,10 +222,10 @@ public class AltaProductos extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbBuscar)))
-                .addGap(12, 12, 12)
+                        .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -230,7 +241,7 @@ public class AltaProductos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbNuevo)
                     .addComponent(jbGuardar)
@@ -260,11 +271,11 @@ public class AltaProductos extends javax.swing.JInternalFrame {
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // TODO add your handling code here:
+
         if (productos.isEmpty()) {
             JOptionPane.showMessageDialog(this, "no hay productos para mostrar");
             return;
         }
-
         int codigoBuscado = Integer.parseInt(jtCodigo.getText());
 
         Producto prod = new Producto();
@@ -276,6 +287,7 @@ public class AltaProductos extends javax.swing.JInternalFrame {
             jtPrecio.setText(String.valueOf(prod.getPrecio()));
             jtStock.setText(String.valueOf(prod.getStock()));
             jcRubro.setSelectedItem(prod.getCategoria());
+            jbEliminar.setEnabled(true);
         } else {
             JOptionPane.showMessageDialog(this, "No se encuentra producto con el codigo: " + codigoBuscado);
         }
@@ -352,11 +364,7 @@ public class AltaProductos extends javax.swing.JInternalFrame {
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
         // TODO add your handling code here:
-        jtCodigo.setEnabled(true);
-        jtDescripcion.setEnabled(true);
-        jtStock.setEnabled(true);
-        jcRubro.setEnabled(true);
-        jtPrecio.setEnabled(true);
+        habilitarCampos();
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
@@ -367,8 +375,11 @@ public class AltaProductos extends javax.swing.JInternalFrame {
         prod = buscarPorCodigo(codigoBuscado);
 
         if (prod != null) {
-            productos.remove(prod);
-            JOptionPane.showMessageDialog(this, "Producto eliminado con exito");
+            int opcion = JOptionPane.showConfirmDialog(this, "Confirma Eliminación S/N", "Confirmación", JOptionPane.YES_NO_OPTION);
+            if (opcion == JOptionPane.YES_OPTION) {
+                productos.remove(prod);
+                JOptionPane.showMessageDialog(this, "Producto " + prod.getDescripcion() + " eliminado con exito");
+            }
         } else {
             JOptionPane.showMessageDialog(this, "No se encuentra producto con el codigo: " + codigoBuscado);
         }
@@ -385,6 +396,14 @@ public class AltaProductos extends javax.swing.JInternalFrame {
         jtStock.setEnabled(false);
         jcRubro.setEnabled(false);
         jtPrecio.setEnabled(false);
+    }
+
+    private void habilitarCampos() {
+        jtCodigo.setEnabled(true);
+        jtDescripcion.setEnabled(true);
+        jtStock.setEnabled(true);
+        jcRubro.setEnabled(true);
+        jtPrecio.setEnabled(true);
     }
 
     private void limpiarCampos() {

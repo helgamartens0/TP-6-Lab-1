@@ -16,12 +16,13 @@ import java.util.TreeSet;
 public class Menu extends javax.swing.JFrame {
 
 //    public static TreeSet<Producto> listaProductos = new TreeSet<>();
-    private TreeSet<Producto> lista = new TreeSet<>(); 
+    private TreeSet<Producto> lista = new TreeSet<>();
+    private TreeSet<Producto> listaPrecio = new TreeSet<>();
 
     public TreeSet<Producto> getLista() {
         return lista;
     }
-    
+
     public Menu() {
         initComponents();
     }
@@ -105,21 +106,30 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmPrecioActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here: escritorio.removeAll(); //si hay alguna ventana puesta en el escritorio q la remueva
+        escritorio.repaint();   // redibujar
+
+        //instanciamos
+        ListadoPorPrecio listaPrecio = new ListadoPorPrecio(lista);
+        listaPrecio.setVisible(true);
+
+        //agregamos la ventana al escritorio
+        escritorio.add(listaPrecio);
+        escritorio.moveToFront(listaPrecio);
     }//GEN-LAST:event_jmPrecioActionPerformed
 
     private void jmProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmProductosActionPerformed
         escritorio.removeAll(); //si hay alguna ventana puesta en el escritorio q la remueva
         escritorio.repaint();   // redibujar
-        
+
         //instanciamos
-        AltaProductos alta = new AltaProductos(lista);
+        AltaProductos alta = new AltaProductos(lista, listaPrecio);
         alta.setVisible(true);
-        
+
         //agregamos la ventana al escritorio
         escritorio.add(alta);
         escritorio.moveToFront(alta);
-     
+        alta.establecerFocoEnBuscar();
     }//GEN-LAST:event_jmProductosActionPerformed
 
     /**
