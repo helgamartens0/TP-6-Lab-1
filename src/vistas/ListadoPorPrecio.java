@@ -28,22 +28,6 @@ public class ListadoPorPrecio extends javax.swing.JInternalFrame {
         this.listaProductos = listaProductos;
     }
 
-    private void mostrarTabla() {
-        DefaultTableModel model = (DefaultTableModel) tablaPorPrecio.getModel();
-        model.setRowCount(0); //limpiamos antes de agregar nuevos productos
-        boolean existe = false;
-        for (Producto producto : listaProductos) {
-            if (producto.getPrecio() >= Double.parseDouble(jtMinimo.getText()) && producto.getPrecio() <= Double.parseDouble(jtMaximo.getText())) {
-                Object[] row = {producto.getCodigo(), producto.getDescripcion(), producto.getPrecio(), producto.getStock()};
-                model.addRow(row);
-                existe = true;
-            }
-        }
-        if(!existe){
-            JOptionPane.showMessageDialog(this,"no hay productos entre esos precios");
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,7 +46,6 @@ public class ListadoPorPrecio extends javax.swing.JInternalFrame {
         jtMaximo = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaPorPrecio = new javax.swing.JTable();
-        jbBuscar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -96,9 +79,19 @@ public class ListadoPorPrecio extends javax.swing.JInternalFrame {
         jLabel3.setText("y");
 
         jtMaximo.setToolTipText("");
+        jtMaximo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtMaximoFocusLost(evt);
+            }
+        });
         jtMaximo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtMaximoActionPerformed(evt);
+            }
+        });
+        jtMaximo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtMaximoKeyReleased(evt);
             }
         });
 
@@ -123,13 +116,6 @@ public class ListadoPorPrecio extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(tablaPorPrecio);
 
-        jbBuscar.setText("buscar");
-        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbBuscarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -147,10 +133,8 @@ public class ListadoPorPrecio extends javax.swing.JInternalFrame {
                         .addGap(26, 26, 26)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jtMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbBuscar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jtMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(146, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 31, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -166,9 +150,8 @@ public class ListadoPorPrecio extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtMinimo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jtMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbBuscar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                    .addComponent(jtMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -184,10 +167,22 @@ public class ListadoPorPrecio extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jtMaximoActionPerformed
 
-    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+    private void jtMaximoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtMaximoKeyReleased
         // TODO add your handling code here:
-        mostrarTabla();
-    }//GEN-LAST:event_jbBuscarActionPerformed
+        DefaultTableModel model = (DefaultTableModel) tablaPorPrecio.getModel();
+        model.setRowCount(0); //limpiamos antes de agregar nuevos productos
+        for (Producto producto : listaProductos) {
+            if (producto.getPrecio() >= Double.parseDouble(jtMinimo.getText()) && producto.getPrecio() <= Double.parseDouble(jtMaximo.getText())) {
+                Object[] row = {producto.getCodigo(), producto.getDescripcion(), producto.getPrecio(), producto.getStock()};
+                model.addRow(row);
+            }
+        }
+    }//GEN-LAST:event_jtMaximoKeyReleased
+
+    private void jtMaximoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtMaximoFocusLost
+
+
+    }//GEN-LAST:event_jtMaximoFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -197,7 +192,6 @@ public class ListadoPorPrecio extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JButton jbBuscar;
     private javax.swing.JTextField jtMaximo;
     private javax.swing.JTextField jtMinimo;
     private javax.swing.JTable tablaPorPrecio;
