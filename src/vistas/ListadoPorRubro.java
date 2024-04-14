@@ -41,6 +41,7 @@ public class ListadoPorRubro extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setMaximizable(true);
+        setTitle("Listado por Rubro");
 
         tablaPorRubro.setForeground(new java.awt.Color(0, 51, 153));
         tablaPorRubro.setModel(new javax.swing.table.DefaultTableModel(

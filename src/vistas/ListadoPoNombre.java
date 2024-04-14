@@ -58,6 +58,7 @@ public class ListadoPoNombre extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setMaximizable(true);
+        setTitle("Listado Por Nombre");
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel1.setText("Listado por Nombre");

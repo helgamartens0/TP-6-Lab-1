@@ -46,6 +46,7 @@ public class Menu extends javax.swing.JFrame {
         jmPrecio = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("MENU");
 
         escritorio.setMinimumSize(new java.awt.Dimension(600, 600));
 
@@ -77,6 +78,11 @@ public class Menu extends javax.swing.JFrame {
         jMenu2.setText("Consultas");
 
         jmRubro.setText("Por Rubro");
+        jmRubro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmRubroActionPerformed(evt);
+            }
+        });
         jMenu2.add(jmRubro);
 
         jmNombre.setText("Por Nombre");
@@ -111,10 +117,12 @@ public class Menu extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmPrecioActionPerformed
         // TODO add your handling code here: escritorio.removeAll(); //si hay alguna ventana puesta en el escritorio q la remueva
+        escritorio.removeAll();
         escritorio.repaint();   // redibujar
 
         //instanciamos
@@ -142,6 +150,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void jmNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmNombreActionPerformed
         // TODO add your handling code here:
+        escritorio.removeAll();
         escritorio.repaint();   // redibujar
 
         //instanciamos
@@ -152,6 +161,18 @@ public class Menu extends javax.swing.JFrame {
         escritorio.add(listaNombre);
         escritorio.moveToFront(listaNombre);
     }//GEN-LAST:event_jmNombreActionPerformed
+
+    private void jmRubroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmRubroActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        
+        ListadoPorRubro listaRubro = new ListadoPorRubro(lista);
+        listaRubro.setVisible(true);
+        
+        escritorio.add(listaRubro);
+        escritorio.moveToFront(listaRubro);
+    }//GEN-LAST:event_jmRubroActionPerformed
 
     /**
      * @param args the command line arguments
