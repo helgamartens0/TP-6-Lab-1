@@ -51,11 +51,11 @@ public class Menu extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 419, Short.MAX_VALUE)
+            .addGap(0, 473, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGap(0, 385, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Administracion");
@@ -73,6 +73,11 @@ public class Menu extends javax.swing.JFrame {
         jMenu2.setText("Consultas");
 
         jmRubro.setText("Por Rubro");
+        jmRubro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmRubroActionPerformed(evt);
+            }
+        });
         jMenu2.add(jmRubro);
 
         jmNombre.setText("Por Nombre");
@@ -107,6 +112,7 @@ public class Menu extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmPrecioActionPerformed
@@ -148,6 +154,18 @@ public class Menu extends javax.swing.JFrame {
         escritorio.add(listaNombre);
         escritorio.moveToFront(listaNombre);
     }//GEN-LAST:event_jmNombreActionPerformed
+
+    private void jmRubroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmRubroActionPerformed
+        // TODO add your handling code here:
+        
+        escritorio.removeAll();
+        escritorio.repaint();
+        ListadoPorRubro listaRubro = new ListadoPorRubro(lista);
+        listaRubro.setVisible(true);
+        
+        escritorio.add(listaRubro);
+        escritorio.moveToFront(listaRubro);
+    }//GEN-LAST:event_jmRubroActionPerformed
 
     /**
      * @param args the command line arguments
