@@ -169,6 +169,9 @@ public class ListadoPorPrecio extends javax.swing.JInternalFrame {
 
     private void jtMaximoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtMaximoKeyReleased
         // TODO add your handling code here:
+        if(jtMinimo.getText().isEmpty() || jtMaximo.getText().isEmpty()){
+            return;
+        }
         DefaultTableModel model = (DefaultTableModel) tablaPorPrecio.getModel();
         model.setRowCount(0); //limpiamos antes de agregar nuevos productos
         for (Producto producto : listaProductos) {

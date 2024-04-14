@@ -271,7 +271,9 @@ public class AltaProductos extends javax.swing.JInternalFrame {
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // TODO add your handling code here:
-
+        if(jtCodigo.getText().isEmpty()){
+            return;
+        }
         if (productos.isEmpty()) {
             JOptionPane.showMessageDialog(this, "no hay productos para mostrar");
             return;
@@ -291,8 +293,7 @@ public class AltaProductos extends javax.swing.JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(this, "No se encuentra producto con el codigo: " + codigoBuscado);
         }
-
-
+        jbBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vistas/buscar.png")));
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
@@ -364,6 +365,7 @@ public class AltaProductos extends javax.swing.JInternalFrame {
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
         // TODO add your handling code here:
+        limpiarCampos();
         habilitarCampos();
     }//GEN-LAST:event_jbNuevoActionPerformed
 
